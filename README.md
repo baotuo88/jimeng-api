@@ -90,30 +90,11 @@ curl -X POST http://localhost:5100/v1/images/generations \
 
 ### Installation and Deployment
 
-#### Method 1: Pull and Update the Docker Image (Recommended)
-
-**Pull command**
-```bash
-docker run -d \
-  --name jimeng-api \
-  -p 5100:5100 \
-  --restart unless-stopped \
-  ghcr.io/iptag/jimeng-api:latest
-```
-
-**Update command**
-```bash
-docker run --rm \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  containrrr/watchtower \
-  --run-once jimeng-api
-```
-
-#### Method 2: Direct Run
+#### Method 1: Build and Run Locally with Node.js (Recommended)
 
 ```bash
 # Clone the project
-git clone <repository-url>
+git clone https://github.com/baotuo88/jimeng-api.git
 cd jimeng-api
 
 # Install dependencies
@@ -123,15 +104,21 @@ npm install
 npm run build
 
 # Start the service
+npm run start
+```
+
+For development, you can also use:
+
+```bash
 npm run dev
 ```
 
-#### Method 3: Docker Deployment (recommended)
+#### Method 2: Build Docker Locally and Run
 
 ##### 🚀 Quick Start
 ```bash
-# Using docker-compose
-docker-compose up -d
+# Build locally with docker compose and start
+docker compose up -d --build
 
 # Or build and run manually
 docker build -t jimeng-api .
@@ -146,20 +133,20 @@ docker run -d \
 ##### 🔧 Common Commands
 ```bash
 # Rebuild and start
-docker-compose up -d --build
+docker compose up -d --build
 
 # View service logs
 docker logs jimeng-api
 
 # Stop service
-docker-compose down
+docker compose down
 
 # Enter container for debugging
 docker exec -it jimeng-api sh
 ```
 
-##### 📊 Docker Image Features
-- ✅ **Multi-stage build**: Optimized image size (170MB)
+##### 📊 Local Container Build Features
+- ✅ **Multi-stage build**: Separate build and runtime stages
 - ✅ **Non-root user**: Enhanced security (user:jimeng,)
 - ✅ **Health check**: Automatic service status monitoring
 - ✅ **Unified port**: Uses port 5100 both inside and outside the container
@@ -230,10 +217,13 @@ This project includes a dedicated Claude Code Skill for quick image generation u
 
 1. **Ensure the jimeng-api service is running**:
 ```bash
-# Start the service with Docker
-docker-compose up -d
-# or
-docker run -d --name jimeng-api -p 5100:5100 ghcr.io/iptag/jimeng-api:latest
+# Option 1: run locally with Node.js
+npm install
+npm run build
+npm run start
+
+# Option 2: build locally with Docker
+docker compose up -d --build
 ```
 
 2. **Copy the skill to Claude Code's skills directory**:

@@ -36,6 +36,11 @@ class LogWriter {
     flush() {
         if(!this.#buffers.length) return;
         !isVercelEnv && fs.appendFileSync(path.join(config.system.logDirPath, `/${util.getDateString()}.log`), Buffer.concat(this.#buffers));
+        this.#buffers = [];
+    }
+
+    destory() {
+        this.flush();
     }
 
     work() {
@@ -100,10 +105,13 @@ class Logger {
     config = {};
     /** @type {Object} 日志级别映射 */
     static Level = {
-        Info: "info",
-        Debug: "debug",
-        Warning: "warning",
+        Fatal: "fatal",
         Error: "error",
+        Warning: "warning",
+        Success: "success",
+        Info: "info",
+        Log: "log",
+        Debug: "debug",
     };
     /** @type {Object} 日志级别文本颜色樱色 */
     static LevelColor = {

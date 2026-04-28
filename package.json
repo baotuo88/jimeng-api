@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "免费的AI图像和视频生成API服务 - 基于即梦AI的逆向工程实现，提供与OpenAI API兼容的接口格式",
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
     "dist": "dist"
@@ -32,12 +32,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-repo/jimeng-api.git"
+    "url": "https://github.com/baotuo88/jimeng-api.git"
   },
   "bugs": {
-    "url": "https://github.com/your-repo/jimeng-api/issues"
+    "url": "https://github.com/baotuo88/jimeng-api/issues"
   },
-  "homepage": "https://github.com/your-repo/jimeng-api#readme",
+  "homepage": "https://github.com/baotuo88/jimeng-api#readme",
   "dependencies": {
     "axios": "^1.6.7",
     "colors": "^1.4.0",

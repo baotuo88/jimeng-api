@@ -92,30 +92,11 @@ curl -X POST http://localhost:5100/v1/images/generations \
 
 ### 安装部署
 
-#### 方式一：docker镜像拉取和更新（推荐）
-
-**拉取命令**
-```bash
-docker run -d \
-  --name jimeng-api \
-  -p 5100:5100 \
-  --restart unless-stopped \
-  ghcr.io/iptag/jimeng-api:latest
-```
-
-**更新命令**
-```bash
-docker run --rm \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  containrrr/watchtower \
-  --run-once jimeng-api
-```
-
-#### 方式二：直接运行
+#### 方式一：本地 Node.js 构建并运行（推荐）
 
 ```bash
 # 克隆项目
-git clone <repository-url>
+git clone https://github.com/baotuo88/jimeng-api.git
 cd jimeng-api
 
 # 安装依赖
@@ -125,15 +106,21 @@ npm install
 npm run build
 
 # 启动服务
+npm run start
+```
+
+开发调试时可以直接使用：
+
+```bash
 npm run dev
 ```
 
-#### 方式三：Docker部署（推荐）
+#### 方式二：本地构建 Docker 后运行
 
 ##### 🚀 快速启动
 ```bash
-# 使用docker-compose
-docker-compose up -d
+# 使用 docker compose 本地构建并启动
+docker compose up -d --build
 
 # 或者手动构建和运行
 docker build -t jimeng-api .
@@ -148,20 +135,20 @@ docker run -d \
 ##### 🔧 常用命令
 ```bash
 # 重新构建并启动
-docker-compose up -d --build
+docker compose up -d --build
 
 # 查看服务日志
 docker logs jimeng-api
 
 # 停止服务
-docker-compose down
+docker compose down
 
 # 进入容器调试
 docker exec -it jimeng-api sh
 ```
 
-##### 📊 Docker镜像特性
-- ✅ **多阶段构建**：优化镜像大小（170MB）
+##### 📊 本地构建容器特性
+- ✅ **多阶段构建**：构建和运行环境分离
 - ✅ **非root用户**：增强安全性（jimeng用户）
 - ✅ **健康检查**：自动监控服务状态
 - ✅ **统一端口**：容器内外均使用5100端口
@@ -232,10 +219,13 @@ http://<你的服务地址>/page
 
 1. **确保 jimeng-api 服务正在运行**:
 ```bash
-# 使用 Docker 启动服务
-docker-compose up -d
-# 或
-docker run -d --name jimeng-api -p 5100:5100 ghcr.io/iptag/jimeng-api:latest
+# 方式一：本地 Node.js 运行
+npm install
+npm run build
+npm run start
+
+# 方式二：本地构建 Docker 运行
+docker compose up -d --build
 ```
 
 2. **将 skill 复制到 Claude Code 的 skills 目录**:
